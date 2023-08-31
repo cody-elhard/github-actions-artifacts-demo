@@ -30,7 +30,7 @@ jobs:
         run: npm run build
       - name: Set js-file-path output
         # Assign js-file-path to the first JS file in dist/assets
-        run: echo "::set-output name=js-file-path::$(find dist/assets -name '*.js' | head -n 1)"
+        run: echo 'js-file-path=$(ls dist/assets/*.js | head -n 1)'"
         id: js-file-path
 
       # Store the build directory as an artifact
