@@ -30,7 +30,22 @@ jobs:
         run: npm run build
       - name: Set js-file-path output
         # Assign js-file-path to the first JS file in dist/assets
-        run: echo 'js-file-path=$(ls dist/assets/*.js | head -n 1)' >> $GITHUB_ENV"
+
+#         A workflow using save-state or set-output like the following
+
+# - name: Save state
+# run: echo "::save-state name={name}::{value}"
+
+# - name: Set output
+# run: echo "::set-output name={name}::{value}"
+# should be updated to write to the new GITHUB_STATE and GITHUB_OUTPUT environment files:
+
+# - name: Save state
+# run: echo "{name}={value}" >> $GITHUB_STATE
+
+# - name: Set output
+# run: echo "{name}={value}" >> $GITHUB_OUTPUT
+        run: echo "js-file-path=$(find dist/assets -name '*.js' | head -n 1)" >> $GITHUB_OUTPUT
         id: js-file-path
 
       # Store the build directory as an artifact
