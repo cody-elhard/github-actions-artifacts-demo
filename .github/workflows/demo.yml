@@ -39,14 +39,9 @@ jobs:
       - name: Log js-file-path
         run: echo ${{ steps.js-file-path.outputs.js-file-path }}
 
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Download dist-files
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: dist-files
-  #         path: dist
-  #     - name: List files
-  #       run: ls
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output stored js-file-path in another workflow
+        run: echo ${{ needs.build.outputs.js-file-path }}
