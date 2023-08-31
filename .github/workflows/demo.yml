@@ -19,6 +19,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      js-file-path:
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -26,12 +28,14 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build
+      - name: echo JS filepath in dist/assets
+        # Assign js-file-path to the first JS file in dist/assets
+        run: echo dist/assets/*.js
+        id: js-file-path
+
       # Store the build directory as an artifact
-      - name: Archive website
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist-files
-          path: dist
+      - name: Log js-file-path
+        run: echo ${{ steps.js-file-path.outputs.js-file-path }}
 
   deploy:
     needs: build
